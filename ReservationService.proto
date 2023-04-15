@@ -1,0 +1,23 @@
+syntax = "proto3";
+package api.grpc.server;
+
+option java_multiple_files = true;
+option java_package = "proto";
+
+service ReservationService {
+  rpc MakeReservation(ReservationRequest) returns (ReservationResponse) {}
+}
+
+message ReservationRequest {
+  string type = 1;
+  string category = 2;
+  int32 quantity = 3;
+  string start_date = 4;
+  string end_date = 5;
+}
+
+message ReservationResponse {
+  bool availability = 1;
+  double daily_rate = 2;
+  double total_amount = 3;
+}
