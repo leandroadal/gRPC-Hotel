@@ -36,10 +36,7 @@ class ReservationService(ReservationService_pb2_grpc.ReservationServiceServicer)
         room = self.findRoomByType(type, category)
         if room is not None and room.get_availability() >= quantity:
             for reservation in self.reservations:
-                if (reservation.getRoom() == room and room.get_availability() > 0
-                        and reservation.overlaps(startDate, endDate)):
-                    return True
-                if reservation.getRoom() == room and reservation.overlaps(startDate, endDate):
+                if reservation.get_room() == room and reservation.overlaps(startDate, endDate):
                     return False
             return True
         return False
