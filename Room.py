@@ -4,7 +4,6 @@ class Room:
         self.category = category
         self.price = price
         self.availability = availability
-        self.reservations = []
         self.id = None
 
     def get_id(self):

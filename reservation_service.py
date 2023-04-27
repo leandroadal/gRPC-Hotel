@@ -20,11 +20,8 @@ class ReservationService(ReservationService_pb2_grpc.ReservationServiceServicer)
             Room("casal", "luxo", 12000, 20),
             Room("familia", "luxo", 15000, 5)]
 
-    def calculatePrice(self, room, numberOfDays, type, quantity):
-        price = 0
-        if room.get_type() == type:
-            price = room.get_price() * quantity * numberOfDays
-        return price
+    def calculatePrice(self, room, numberOfDays, quantity):
+        return room.get_price() * quantity * numberOfDays
 
     def findRoomByType(self, type, category):
         for room in self.availableRooms:
@@ -55,7 +52,7 @@ class ReservationService(ReservationService_pb2_grpc.ReservationServiceServicer)
             temp_end_date = datetime.datetime.strptime(end_date, "%Y-%m-%d").date()
             temp_start_date = datetime.datetime.strptime(start_date, "%Y-%m-%d").date()
             number_of_days = (temp_end_date - temp_start_date).days
-            price = self.calculatePrice(room, number_of_days, type, quantity)
+            price = self.calculatePrice(room, number_of_days, quantity)
             room.set_availability(room.get_availability() - quantity)
             reservation = Reservation(type, quantity, price, start_date, end_date)
             reservation.set_room(room)
